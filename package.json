@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.4",
-    "prop-types": "^15.5.10"
+    "prop-types": "^15.5.10",
+    "react-native-fast-image": "8.1.5"
   }
 }

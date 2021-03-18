@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, Animated, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 const STAR_IMAGE = require( '../images/airbnb-star.png' );
 const STAR_SELECTED_IMAGE = require( '../images/airbnb-star-selected.png' );
@@ -12,7 +13,6 @@ export default class Star extends PureComponent {
 
   constructor() {
     super();
-    this.springValue = new Animated.Value( 1 );
 
     this.state = {
       selected: false
@@ -22,16 +22,6 @@ export default class Star extends PureComponent {
   spring() {
     const { position, starSelectedInPosition } = this.props;
 
-    this.springValue.setValue( 1.2 );
-
-    Animated.spring(
-      this.springValue,
-      {
-        toValue: 1,
-        friction: 2,
-        tension: 1
-      }
-    ).start();
 
     this.setState( { selected: !this.state.selected } );
     starSelectedInPosition( position );
@@ -43,15 +33,15 @@ export default class Star extends PureComponent {
 
     return (
       <TouchableOpacity activeOpacity={1} onPress={this.spring.bind( this )} disabled={isDisabled}>
-        <Animated.Image
+        <FastImage
           source={starSource}
+          tintColor={fill && selectedColor ? selectedColor : undefined}
           style={[
             styles.starStyle,
             {
               tintColor: fill && selectedColor ? selectedColor : undefined,
               width: size || STAR_SIZE,
               height: size || STAR_SIZE,
-              transform: [{ scale: this.springValue }]
             },
             starStyle
           ]}
@@ -63,6 +53,6 @@ export default class Star extends PureComponent {
 
 const styles = StyleSheet.create( {
   starStyle: {
-    margin: 3
+    margin: 3,
   }
 } );
